@@ -3,6 +3,7 @@
 # To disable warning libdc1394 error: Failed to initialize libdc1394
 ln -s /dev/null /dev/raw1394
 
+# Create the config file from the template and environment variables
 if [ ! -f /app/thumbor.conf ]; then
   envtpl /app/thumbor.conf.tpl  --allow-missing --keep-template
 fi
@@ -17,14 +18,20 @@ if [ -z ${THUMBOR_HOST+x} ]; then
     THUMBOR_HOST='0.0.0.0'
 fi
 
-# Check if thumbor port is defined -> (default port 80)
-if [ -z ${THUMBOR_PORT+x} ]; then
-    THUMBOR_PORT=80
+# Prioritize the platform-provided PORT, then THUMBOR_PORT, then default to 8888
+# This makes it compatible with Railway automatically.
+if [ -z ${PORT+x} ]; then
+  if [ -z ${THUMBOR_PORT+x} ]; then
+    PORT=8888
+  else
+    PORT=$THUMBOR_PORT
+  fi
 fi
 
+# Start the application
 if [ "$1" = 'thumbor' ]; then
-    echo "---> Starting thumbor with ${THUMBOR_NUM_PROCESSES:-1} processes..."
-    exec thumbor --ip=$THUMBOR_HOST --port=$THUMBOR_PORT --conf=/app/thumbor.conf $LOG_PARAMETER --processes=${THUMBOR_NUM_PROCESSES:-1}
+    echo "---> Starting thumbor with ${THUMBOR_NUM_PROCESSES:-1} processes on port $PORT..."
+    exec thumbor --ip=$THUMBOR_HOST --port=$PORT --conf=/app/thumbor.conf $LOG_PARAMETER --processes=${THUMBOR_NUM_PROCESSES:-1}
 fi
 
 exec "$@"
