@@ -48,7 +48,10 @@ RUN PILLOW_VERSION=$(python -c 'import PIL; print(PIL.__version__)') ; \
       --global-option="build_ext" --global-option="--enable-tiff" ; \
     fi ;
 
+# Copy the entrypoint script and make it executable
 COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # The CMD is simplified. The entrypoint script will handle passing config.
