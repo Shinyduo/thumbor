@@ -33,6 +33,8 @@ WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
+# Install the tool needed to create the config file
+RUN pip install envtpl
 
 COPY conf/thumbor.conf.tpl /app/thumbor.conf.tpl
 
