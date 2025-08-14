@@ -9,6 +9,7 @@ RUN apt-get update
 RUN apt-get install -y -q \
     git \
     curl \
+    ca-certificates \
     libjpeg-turbo-progs \
     graphicsmagick \
     libgraphicsmagick++3 \
