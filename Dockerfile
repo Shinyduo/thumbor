@@ -27,9 +27,9 @@ RUN apt-get -y upgrade && \
     apt-get -y autoremove && \
     apt-get clean
 
-ENV HOME /app
-ENV SHELL bash
-ENV WORKON_HOME /app
+ENV HOME=/app
+ENV SHELL=bash
+ENV WORKON_HOME=/app
 WORKDIR /app
 
 COPY requirements.txt /app/requirements.txt
