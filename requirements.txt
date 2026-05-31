@@ -7,8 +7,7 @@ dateutils==0.6.12
 shortuuid==1.0.8
 redis==5.0.1
 raven==6.10.0
-tc-aws==7.0.2
-tc-core==0.5
+thumbor-aws==0.9.1
 tc_redis==2.5.0
-thumbor[all]==7.7.7
+thumbor[all]==7.8.0
 thumbor-wand-engine==0.1.1
